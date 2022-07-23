@@ -1,0 +1,59 @@
+<html>
+<input id="text"/>
+
+<button id="button">Earnings and Expenses Input</button>
+
+<p>Total Earnings:<span id="total-earnings"></span></p>
+<ul id="earnings"></ul>
+
+<p>Total Expenses:<span id="total-expenses"></span></p>
+<ul id="expenses"></ul>
+
+<p>Total Balance:<span id="total-balance"></span></p>
+<ul id="balance-total"></ul>
+<scrpit>
+var earning, expence, item, balance;
+
+function getNumberOrString(value) {
+  // Convert a string value to a number if possible
+  let number_value = Number(value);
+  if (Number.isNaN(number_value)) {
+    return value
+  } else {
+    return number_value
+  }
+}
+
+
+earning = [];
+expence = [];
+balance = [0, 0];
+
+
+document.getElementById('button').addEventListener('click', (event) => {
+  if (getNumberOrString(document.getElementById('text').value) >= '0') {
+    let element_earnings = document.getElementById('earnings');
+    let new_li = document.createElement('li');
+    new_li.innerText = getNumberOrString(document.getElementById('text').value);
+
+    element_earnings.appendChild(new_li);
+    earning.unshift(getNumberOrString(document.getElementById('text').value));
+  } else {
+    expence.unshift(getNumberOrString(document.getElementById('text').value));
+    let element_expenses = document.getElementById('expenses');
+    element_expenses.innerText = getNumberOrString(document.getElementById('text').value);
+  }
+  earning.forEach((item) => {
+    balance.unshift(earning.shift());
+  });
+  expence.forEach((item) => {
+    balance.push(expence.shift());
+  });
+  let element_balance_total = document.getElementById('balance-total');
+  element_balance_total.innerText = balance.reduce((a,b) => a+b, 0);
+
+});
+</script>
+
+
+</html>
